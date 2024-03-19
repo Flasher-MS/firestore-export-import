@@ -66,9 +66,8 @@ export const backupFromDocService = async <T>(
           } else {
             if (data[collectionName][doc.id][refKey]) {
               if (Array.isArray(data[collectionName][doc.id][refKey])) {
-                for (let val of data[collectionName][doc.id][refKey]) {
-                  data[collectionName][doc.id][refKey] = getPath(val)
-                }
+                // fixed ref array overwrite issue
+                data[collectionName][doc.id][refKey] = data[collectionName][doc.id][refKey].map(val => getPath(val));
               } else if (
                 typeof data[collectionName][doc.id][refKey].path === 'string'
               ) {
