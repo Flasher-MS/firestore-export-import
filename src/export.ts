@@ -132,9 +132,8 @@ export const backUpDocRef = async <T>(
       } else {
         if (data[refKey]) {
           if (Array.isArray(data[refKey])) {
-            for (let val of data[refKey]) {
-              data[refKey] = getPath(val)
-            }
+            // fixed ref array overwrite issue
+            data[refKey] = data[refKey].map(val => getPath(val));
           } else if (typeof data[refKey].path === 'string') {
             data[refKey] = data[refKey].path
           }
